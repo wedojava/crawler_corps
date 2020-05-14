@@ -9,6 +9,10 @@ import (
 	"github.com/pkg/errors"
 )
 
+type Corps struct {
+	Targets []CrawlerLeader
+}
+
 type Crawler struct {
 	Url      string
 	Raw      string
@@ -28,7 +32,7 @@ type ICrawler interface {
 	GetDatetime()
 }
 
-type IWebSite interface {
+type ICrawlerLeader interface {
 	GetUrls()
 }
 
