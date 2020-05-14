@@ -19,3 +19,4 @@ vendor/
 .ipynb_checkpoints/
 dist/
 release/
+.DS_Store

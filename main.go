@@ -10,6 +10,9 @@ import (
 
 func main() {
 	fmt.Println("Crawler Corps fighting against Dwnews!")
+	c := &corps.Corps{}
+	cl := &corps.CrawlerLeader{}
+	c.Fire(cl)
 	dw := corpsDw.DwnewsSite{}
 	dw.Domain = "www.dwnews.com"
 	dw.StartUrl = "https://" + dw.Domain

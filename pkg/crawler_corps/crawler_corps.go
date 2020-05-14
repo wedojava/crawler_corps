@@ -1,6 +1,4 @@
-package corps
-
-import "fmt"
+package crawler_corps
 
 type Corps struct {
 	CLeaders []CrawlerLeader
@@ -26,20 +24,11 @@ type ICorps interface {
 
 type ICrawlerLeader interface {
 	GetUrls()
-	Assign()
+	Assign(ICrawler)
 }
 
 type ICrawler interface {
 	GetTitle()
 	GetContent()
 	GetDatetime()
-}
-
-func (c *Corps) Fire(ic ICrawlerLeader) error {
-	fmt.Println("由Corps调用针对不同网站的爬虫")
-	// 先获得url列表
-	ic.GetUrls()
-	// 然后安排爬虫
-	ic.Assign()
-	return nil
 }

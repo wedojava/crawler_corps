@@ -5,9 +5,10 @@ import (
 	"testing"
 
 	"github.com/wedojava/crawler_corps/pkg/corps"
+	"github.com/wedojava/gears"
 )
 
-var dwtest DwnewsSite = DwnewsSite{
+var dwtest DwnewsCLeader = DwnewsCLeader{
 	CrawlerLeader: corps.CrawlerLeader{
 		Domain:   "www.dwnews.com",
 		StartUrl: "https://www.dwnews.com",
@@ -34,7 +35,7 @@ func TestGetContent(t *testing.T) {
 			Datetime: "",
 		},
 	}
-	dwpost.Raw, _ = corps.HttpGetBody(dwpost.Url, 10)
+	dwpost.Raw, _ = gears.HttpGetBody(dwpost.Url, 10)
 
 	dwpost.GetContent()
 	dwpost.GetTitle()
