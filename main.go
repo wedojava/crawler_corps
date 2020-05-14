@@ -15,15 +15,15 @@ func main() {
 	dw.StartUrl = "https://" + dw.Domain
 	dw.GetUrls() // get and set dw.Urls if method success.
 	for _, url := range dw.Urls {
-		dwPost := corpsDw.DwnewsPost{}
-		dwPost.Url = url
+		dwCrawler := corpsDw.DwnewsCrawler{}
+		dwCrawler.Url = url
 		raw, err := corps.HttpGetBody(url, 10)
 		if err != nil {
 			log.Println("\n[-] main() -> HttpGetBody() err occur! \n[-] ", err)
 		}
-		dwPost.Raw = raw
-		dwPost.GetTitle()
-		dwPost.GetContent()
-		dwPost.GetDatetime()
+		dwCrawler.Raw = raw
+		dwCrawler.GetTitle()
+		dwCrawler.GetContent()
+		dwCrawler.GetDatetime()
 	}
 }

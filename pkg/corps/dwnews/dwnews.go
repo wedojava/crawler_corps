@@ -12,16 +12,16 @@ import (
 )
 
 type DwnewsSite struct {
-	corps.WebSite
+	corps.CrawlerLeader
 }
 
-type DwnewsPost struct {
-	corps.Post
+type DwnewsCrawler struct {
+	corps.Crawler
 }
 
 type CrawlerDwnews struct {
-	Dwnews DwnewsSite
-	Posts  []DwnewsPost
+	Dwnews   DwnewsSite
+	Crawlers []DwnewsCrawler
 }
 
 type Paragraph struct {
@@ -43,16 +43,16 @@ func (web *DwnewsSite) GetUrls() error {
 	return nil
 }
 
-func (dwPost *DwnewsPost) GetContent() error {
+func (dwCrawler *DwnewsCrawler) GetContent() error {
 	var jsTxtBody = "["
 	var body string // splice contents
 	var reContent = regexp.MustCompile(`"htmlTokens":\[\[(?P<contents>.*?)\]\]`)
-	for _, v := range reContent.FindAllStringSubmatch(dwPost.Raw, -1) {
+	for _, v := range reContent.FindAllStringSubmatch(dwCrawler.Raw, -1) {
 		jsTxtBody += v[1] + ","
 	}
 	if jsTxtBody == "[" { // this means jsTxtBody got northing, so it may be pic news.
 		reContent = regexp.MustCompile(`"\d{7}":{"caption":"(?P<title>.*?)"`)
-		for _, v := range reContent.FindAllStringSubmatch(dwPost.Raw, -1) {
+		for _, v := range reContent.FindAllStringSubmatch(dwCrawler.Raw, -1) {
 			body += v[1] + "  \n"
 		}
 	} else {
@@ -73,17 +73,17 @@ func (dwPost *DwnewsPost) GetContent() error {
 
 		}
 	}
-	dwPost.Content = body
+	dwCrawler.Content = body
 
 	return nil
 }
 
-func (dwPost *DwnewsPost) GetDatetime() error {
+func (dwCrawler *DwnewsCrawler) GetDatetime() error {
 	var a = regexp.MustCompile(`(?m)<meta name="parsely-pub-date" content="(?P<date>.*?)".*?/>`)
-	rt := a.FindStringSubmatch(dwPost.Raw)
+	rt := a.FindStringSubmatch(dwCrawler.Raw)
 	if rt != nil {
-		dwPost.Datetime = rt[1]
+		dwCrawler.Datetime = rt[1]
 		return nil
 	}
-	return errors.New("[-] (dwPost *DwnewsPost) GetDatetime(): regexp matched nothing.")
+	return errors.New("[-] (dwCrawler *DwnewsCrawler) GetDatetime(): regexp matched nothing.")
 }

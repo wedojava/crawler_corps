@@ -8,7 +8,7 @@ import (
 )
 
 var dwtest DwnewsSite = DwnewsSite{
-	WebSite: corps.WebSite{
+	CrawlerLeader: corps.CrawlerLeader{
 		Domain:   "www.dwnews.com",
 		StartUrl: "https://www.dwnews.com",
 		Urls:     nil,
@@ -25,8 +25,8 @@ func TestGetUrls(t *testing.T) {
 }
 
 func TestGetContent(t *testing.T) {
-	dwpost := &DwnewsPost{
-		Post: corps.Post{
+	dwpost := &DwnewsCrawler{
+		Crawler: corps.Crawler{
 			Url:      "https://www.dwnews.com/全球/60178371",
 			Raw:      "",
 			Title:    "",

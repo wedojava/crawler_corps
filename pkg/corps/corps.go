@@ -9,7 +9,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Post struct {
+type Crawler struct {
 	Url      string
 	Raw      string
 	Title    string
@@ -17,13 +17,13 @@ type Post struct {
 	Datetime string
 }
 
-type WebSite struct {
+type CrawlerLeader struct {
 	Domain   string
 	StartUrl string
 	Urls     []string
 }
 
-type IPost interface {
+type ICrawler interface {
 	GetContent()
 	GetDatetime()
 }
@@ -32,7 +32,7 @@ type IWebSite interface {
 	GetUrls()
 }
 
-func (c *Post) GetTitle() error {
+func (c *Crawler) GetTitle() error {
 	var a = regexp.MustCompile(`(?m)<meta name="twitter:title" content="(?P<title>.*?)"`)
 	rt := a.FindStringSubmatch(c.Raw)
 	if rt != nil {
