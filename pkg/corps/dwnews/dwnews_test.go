@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/wedojava/crawler_corps/pkg/corps"
+	"github.com/wedojava/gears"
 )
 
 var dwtest DwnewsSite = DwnewsSite{
@@ -34,7 +35,7 @@ func TestGetContent(t *testing.T) {
 			Datetime: "",
 		},
 	}
-	dwpost.Raw, _ = corps.HttpGetBody(dwpost.Url, 10)
+	dwpost.Raw, _ = gears.HttpGetBody(dwpost.Url, 10)
 
 	dwpost.GetContent()
 	dwpost.GetTitle()

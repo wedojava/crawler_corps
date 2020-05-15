@@ -11,7 +11,7 @@ import (
 	"github.com/wedojava/gears"
 )
 
-type DwnewsSite struct {
+type DwnewsCLeader struct {
 	corps.CrawlerLeader
 }
 
@@ -19,20 +19,32 @@ type DwnewsCrawler struct {
 	corps.Crawler
 }
 
-type CrawlerDwnews struct {
-	Dwnews   DwnewsSite
-	Crawlers []DwnewsCrawler
-}
-
 type Paragraph struct {
 	Type    string
 	Content string
 }
 
-func (web *DwnewsSite) GetUrls() error {
+func (cl *DwnewsCLeader) NewCrawlers() {
+	for _, url := range cl.Urls {
+		c := &DwnewsCrawler{}
+		c.Url = url
+		cl.Crawlers = append(cl.Crawlers, c)
+	}
+}
+
+func (cl *DwnewsCLeader) Assign() {
+	for _, c := range cl.Crawlers {
+		c.GetRaw()
+		c.GetContent()
+		c.GetDatetime()
+		c.Save()
+	}
+}
+
+func (web *DwnewsCLeader) GetUrls() error {
 	var ret_lst []string
 	var reLink = regexp.MustCompile(`(?m)<a\shref\s?=\s?"(?P<href>/.{2}/\d{8}/.+?)".*?>`)
-	raw, err := corps.HttpGetBody(web.StartUrl, 10)
+	raw, err := gears.HttpGetBody(web.StartUrl, 10)
 	if err != nil {
 		return errors.Wrap(err, "\n[-] (web *DwNews)GetUrls()>HttpGetBody() error!\n[-] ")
 	}
